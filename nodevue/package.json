@@ -22,9 +22,12 @@
   "homepage": "https://github.com/JunHyeok95/nodejs#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "crypto-js": "^3.1.9-1",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
+    "hashmap": "^2.4.0",
     "mysql": "^2.18.1",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.2",
+    "open-graph-scraper": "^3.6.2"
   }
 }
