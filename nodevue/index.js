@@ -39,9 +39,19 @@ io.sockets.on('connection', (socket, opt) => {
     // EIO 는 상태값 t 는 토큰
     util.log("connection >>", socket.id, socket.handshake.query);
 
-    socket.on('join', function(roomId, fn){
+    /*
+    아이디를 받고 싶을 경우에 추가한다
+    // socket.on('join', function(roomId, userid, fn) {
+    // socket.userid = userid;
+    */
+
+    socket.on('join', function(roomId, fn) {
         socket.join(roomId, function(){ // 이해를 돕기위한 ...
+
+            // 조인을 하고 성공하면 룸 나가기를 요청하므로 현재 방 -> 나간방,들어간방 -> 나간방,들어간방 ... 이 맞다
             util.log("join >>", roomId, Object.keys(socket.rooms));
+            if(fn) // 클라이언트에 콜백을 해주기 위함
+                fn();
         });
     });
 
@@ -59,12 +69,26 @@ io.sockets.on('connection', (socket, opt) => {
             fn(Object.keys(socket.rooms));
     });
 
-    // {roomId : [socket1, socket2]} 룸 안에는 소켓 아이디가 있다
+    /*
+        room 의 message 종류 !!
+        1. socket.broadcast.emit(...) // 채팅 서버에 접속 한 모든이, ! 나 제외 (all room, not me)
+        2. socket.broadcast.to('roomid').emit(...) // roomid 접속 모든 유저, ! 나 제외 (joinedRoom, not me)
+        3. io.io('roomid').emit(...) // roomid 접속 모든 유저, 나 포함 (joinedRoom all!!)
+    */
+
+    // room 데이터 구조 -> data: {room: 'roomid', msg: 'msg 내용 ...'}
+    // roomId 데이터 구조 -> {roomId : [socket1, socket2]} 룸 안에는 소켓 아이디가 있다
     socket.on('message', (data, fn) => {
         // 클라이언트에서 send를 이용해서 emit message 하면 여기로 온다
         // data.msg 는 msg 값
         util.log("message >>", data.msg, Object.keys(socket.rooms)); // 룸을 이용해서 방에 있는 사람한테 보낼 수 있다
 
+        socket.broadcast.to(data.room).emit('message', {room: data.room, msg: data.msg});
+
+        // !!!! 이걸 통해서 클라이언트한테 메시지를 보낸다
+        if (fn)
+            fn(data.msg);
+            
         // 귓속말 상대한테 보내면 상대의 방이 만들어짐으로 거기로 보낸다
     });
 

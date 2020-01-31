@@ -13,14 +13,15 @@
     <h1>Chat Client <strong id="myid" class="red"></strong></h1>
 
     <div id="rooms"></div>
-
+        <input type="text" id="roomid" value="">
+        <button onclick="joinRoom()">join</button>
     <hr>
 
     <div id="status" class="red"></div>
 
     <div id="list">
         <div>
-            <input type="text" id="msg" value="hello Chat">
+            <input type="text" id="msg" value="hello">
             <button onclick="send()" id="btnSend">Send</button>
         </div>
     </div>
@@ -33,24 +34,28 @@
     <!-- socket.io 가 웹 서버랑 연동될 때 기본으로 제공하는 것 -->
     <script src="/socket.io/socket.io.js"></script>
     <script>
-        var square = 'square';
+        var square = "square";
         var joinedRoom = null;
         var socket = io('http://localhost:5000?aaa=111'); // 내가 접속할 서버
         socket.on('connect', function(){
             console.log("connected !!");
 
-            // 자동 로그인 과정
-            socket.emit('join', square);
-            // 들어올때마다 자기의 방이 있고 square 이라는 방에 들어가라 라는 의미
-            joinedRoom = square;
+            // !! 함수화 한다
+            // // 자동 로그인 과정
+            // socket.emit('join', square);
+            // // 들어올때마다 자기의 방이 있고 square 이라는 방에 들어가라 라는 의미
+            // joinedRoom = square;
 
-            $('#status').text("Connected : " + joinedRoom);
+            makeJoin(square);
 
-            // 서버에서 룸을 받아서 처리 해줬다
-            socket.emit('rooms', function(rooms){
-                console.log("romms >>", rooms);
-                $('#rooms').text(rooms);
-            });
+            // !! 이걸 함수화 한다
+            // // 서버에서 룸을 받아서 처리 해줬다
+            // socket.emit('rooms', function(rooms){
+            //     console.log("romms >>", rooms);
+            //     $('#rooms').text(rooms);
+            // });
+
+            // displayRomms();
         });
 
         // 접속을 하자마자 server 의 message, {msg: 'Welcome ' + socket.id} 가 날아옴
@@ -58,25 +63,66 @@
             console.log("message >>", data);
 
             let msg = data.msg;
-            if (msg && msg.startsWith('Welcome ')){
+
+            // !! 내가 받은 메세지를 list 에 append 하는 과정
+            // 수신 메시지
+            $('#list').append(`<div><strong>${msg}</strong><div>`);
+
+            if (msg && msg.startsWith('Welcome ')){ // 웰컴에 대한 처리를 했다
                 // 'Welcome ' + socket.id 의 뒷부분 삭제 
                 let myid = msg.substring(msg.lastIndexOf(' ')+1);
                 $('#myid').text(myid);
             }
             
         });
+
         socket.on('disconnect', function(){
             console.log("disconnected ..");
             $('#status').text("disconnected : ");
         });
+        
         function send() {
             // CDN 콘텐츠 전송 네트워크 ... 제이쿼리
             let msg = $('#msg').val();
             socket.emit('message', {room: joinedRoom, msg: msg}, function(ret) {
                 // 내가 서버한테 함수가 있다는 것을 알려준다 -> 즉 서버는 파라미터로 함수가 오니까 그걸 실행 할 수 있다.
-                // console.log("message.callback >>> ", ret);
+                console.log("message.callback >>> ", ret);
+
+                // 내가 메세지를 보내고 완료됬을땐 나한테 보내준다
+                $('#list').append(`<div>나 : ${msg}<div>`);
             });
         }
+
+        // 버튼에다가 온클릭 달았음
+        function joinRoom() {
+            let roomid = $('input#roomid').val();
+            // console.log(typeof(roomid));
+            if (!roomid) {
+                alert('input');
+                return;
+            }
+            makeJoin(roomid);
+        }
+
+        function makeJoin(roomid) {
+            socket.emit('join', roomid, () => {
+                socket.emit('leave', joinedRoom); // A 방을 떠나고
+                joinedRoom = roomid; // B 방을 들어간다 - 자동으로 나가는 기능 !!
+
+                $('#status').text("joined : " + joinedRoom);
+
+                displayRomms();
+            });
+        };
+
+        // 내가 무슨 방에 들어갔는지 표시 콘솔로 나오는걸 그리면 됨 !
+        function displayRomms() {
+            socket.emit('rooms', function(rooms){
+                console.log("romms >>", rooms);
+                $('#rooms').text(rooms); // 그리는 과정
+            });
+        }
+
 
     </script>
     
