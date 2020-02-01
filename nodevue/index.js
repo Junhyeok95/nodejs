@@ -92,6 +92,11 @@ io.sockets.on('connection', (socket, opt) => {
         // 귓속말 상대한테 보내면 상대의 방이 만들어짐으로 거기로 보낸다
     });
 
+    // 귓속말 추가
+    socket.on('message-for-one', (socketid, msg, fn) => {
+        socket.to(socketid).emit('message', {msg: msg});
+    });
+
     // 룸이라는게 없으면 끊어줘야 하지만 안해두 됨
     // room 이 없으면 map 등을 이용하여 구현 해줘야 함
     socket.on('disconnecting', function(roomId, fn){

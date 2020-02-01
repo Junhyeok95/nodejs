@@ -21,10 +21,23 @@
 
     <div id="list">
         <div>
+            <label for="msg">채팅 >>> </label>
             <input type="text" id="msg" value="hello">
             <button onclick="send()" id="btnSend">Send</button>
         </div>
+        <div>
+            <label for="socketid">귓속말 >>> </label>
+            <input type="text" id="socketid" placeholder="상대방 아이디 입력">
+            <!-- <br> -->
+            <!-- <input type="text" id="msg" value="hello"> -->
+            <button onclick="sendOne()">귓속말 전송</button>
+        </div>
+
+        <!-- 채팅 추가 될 공간 -->
+
     </div>
+
+    
 
     <!-- getelementbyid 간단하게 사용하기 위해서 ... -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
@@ -121,6 +134,13 @@
                 console.log("romms >>", rooms);
                 $('#rooms').text(rooms); // 그리는 과정
             });
+        }
+
+        // 귓속말 만들기
+        function sendOne(){
+            let socketid = $('#socketid').val();
+            if (!socketid) return alert("상대 아이디 입력 바람 !");
+            socket.emit("message-for-one",socketid, "귓속말:" + $('#msg').val());
         }
 
 
