@@ -31,6 +31,11 @@ const io = require('Socket.io').listen(server, {
     pingTimeout: 5000 // 연결 확인
 });
 
+app.get('/chat', function(req, res) {
+    res.redirect('/chat.html');
+});
+
+// 채팅 구현
 io.sockets.on('connection', (socket, opt) => {
     // 접속을 하면 접속한 유저의 아이디를 알려준다
     socket.emit('message', {msg: 'Welcome ' + socket.id}); // 소켓 아이디는 유일 키

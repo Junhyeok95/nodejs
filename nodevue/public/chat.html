@@ -2,39 +2,56 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>ChatClient</title>
     <style>
         .red { color:red; }
     </style>
+    <!-- 합쳐지고 최소화된 최신 CSS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>Chat Client <strong id="myid" class="red"></strong></h1>
-
-    <div id="rooms"></div>
-        <input type="text" id="roomid" value="">
-        <button onclick="joinRoom()">join</button>
-    <hr>
-
-    <div id="status" class="red"></div>
-
-    <div id="list">
-        <div>
-            <label for="msg">채팅 >>> </label>
-            <input type="text" id="msg" value="hello">
-            <button onclick="send()" id="btnSend">Send</button>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <h1 class="text-center">Chat Client </h1>
+                <div>
+                    <h2>
+                        <label for="myid">내 아이디 >>> </label>
+                        <strong id="myid" class="red"></strong>
+                    </h2>
+                </div>
+                <div>
+                    <label for="rooms">현재 접속한 방 >>> </label>
+                    <span id="rooms"></span>
+                    <br>
+                    <label for="roomid">방 변경 >>> </label>
+                    <input type="text" id="roomid" value="">
+                    <button class="btn btn-default" onclick="joinRoom()">join</button>
+                </div>
+                <hr>
+                <div id="status" class="red"></div>
+                <div id="list">
+                    <div>
+                        <label for="msg">채팅 >>> </label>
+                        <input type="text" id="msg" value="">
+                        <button class="btn btn-default" onclick="send()" id="btnSend">Send</button>
+                    </div>
+                    <div>
+                        <label for="socketid">귓속말 >>> </label>
+                        <input type="text" id="socketid" placeholder="상대방 아이디 입력">
+                        <!-- <br> -->
+                        <!-- <input type="text" id="msg" value="hello"> -->
+                        <button class="btn btn-default" onclick="sendOne()">귓속말 전송</button>
+                    </div>
+                    <!-- 채팅 추가 될 공간 -->
+                </div>
+            </div>
+            <div class="col-md-1"></div>
         </div>
-        <div>
-            <label for="socketid">귓속말 >>> </label>
-            <input type="text" id="socketid" placeholder="상대방 아이디 입력">
-            <!-- <br> -->
-            <!-- <input type="text" id="msg" value="hello"> -->
-            <button onclick="sendOne()">귓속말 전송</button>
-        </div>
-
-        <!-- 채팅 추가 될 공간 -->
-
     </div>
 
     
@@ -49,7 +66,7 @@
     <script>
         var square = "square";
         var joinedRoom = null;
-        var socket = io('http://localhost:5000?aaa=111'); // 내가 접속할 서버
+        var socket = io('http://localhost:5000'); // 내가 접속할 서버
         socket.on('connect', function(){
             console.log("connected !!");
 
