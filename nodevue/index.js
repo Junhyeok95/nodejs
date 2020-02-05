@@ -11,7 +11,7 @@ app.engine('html', require('ejs').renderFile);
 
 app.get('/', (req, res) => {
     // res.send("Hello NodeJS");
-    res.render('index', {name:'장준혁'});
+    res.render('index', {name:'장준혁'}); // views 의 index.ejs
 });
 
 app.get('/test/:email', (req, res) => {

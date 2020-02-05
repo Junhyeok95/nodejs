@@ -3,9 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Node Test</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    
 </head>
 <body>
-    <h1>Node EJS Test Page</h1>
-    <h2><%= name %></h2>
+
+    <div class="container">
+        <div class="row">
+            <h1>Node EJS Test Page</h1>
+            <h2>만든이 : <%= name %></h2>
+
+            <br><hr>
+            <button class="btn btn-success" onclick="myFunction()">채팅 서버 입장</button>
+        </div>
+    </div>
+
+    <script>
+        function myFunction() {
+            alert("Enter chat server");
+            location.href='/chat.html';
+        }
+    </script>
+
 </body>
 </html>
