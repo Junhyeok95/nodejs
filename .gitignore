@@ -1,5 +1,6 @@
-# Created by https://www.gitignore.io/api/node
-# Edit at https://www.gitignore.io/?templates=node
+
+# Created by https://www.gitignore.io/api/vue,node,vuejs
+# Edit at https://www.gitignore.io/?templates=vue,node,vuejs
 
 ### Node ###
 # Logs
@@ -107,6 +108,25 @@ dist/
 tmp/
 temp/
 
-# End of https://www.gitignore.io/api/node
+### Vue ###
+.DS_*
+**/*.backup.*
+**/*.back.*
+
+node_modules
+
+*.sublime*
+
+psd
+thumb
+sketch
+
+### Vuejs ###
+# Recommended template: Node.gitignore
+
+npm-debug.log
+yarn-error.log
+
+# End of https://www.gitignore.io/api/vue,node,vuejs
 
 .DS_Store
