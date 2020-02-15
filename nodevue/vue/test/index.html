@@ -7,30 +7,76 @@
     <title>TEST</title>
     <!-- 개발버전, 도움되는 콘솔 경고를 포함. -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        div {
+            border: black 1px solid;
+            padding: 5px;
+        }
+        .textColor {
+            color: lightslategrey;
+            padding-left: 5px;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
         {{ message }}
+        <p class="textColor"> JS Console >>> app.message = 'text' -> 새로운 메시지 </p>
     </div>
     <br>
+
     <div id="app-2">
         <span v-bind:title="message">
             내 위에 잠시 마우스를 올리면 동적으로 바인딩 된 title을 볼 수 있습니다!
         </span>
+        <p class="textColor"> JS Console >>> app2.message = 'title' -> 새로운 바인딩 된 title 속성 </p>
     </div>
+    <br>
+
     <div id="app-3">
         <p v-if="seen">이제 나를 볼 수 있어요</p>
+        <p class="textColor"> JS Console >>> app3.seen = false -> 메시지가 사라짐</p>
     </div>
+    <br>
+
     <div id="app-4">
         <ol>
             <li v-for="todo in todos">
                 {{ todo.text }}
             </li>
         </ol>
+        <p class="textColor"> JS Console >>> app4.todos.push({ text: 'New item' }) > New item 동적으로 추가 됨 </p>
     </div>
+    <br>
+
     <div id="app-5">
         <p>{{ message }}</p>
         <button v-on:click="reverseMessage">메시지 뒤집기</button>
+        <p class="textColor"> > v-on 디렉티브를 사용, 이벤트 호출 </p>
+    </div>
+    <br>
+
+    <div id="app-6">
+        <p>{{ message }}</p>
+        <input v-model="message">
+        <p class="textColor"> > v-model 디렉티브 제공, 입력과 앱 상태를 양방향으로 바인딩 </p>
+    </div>
+    <br>
+
+    <div id="app-7">
+        <ol>
+            <!--
+                이제 각 todo-item 에 todo 객체를 제공합니다.
+                화면에 나오므로, 각 항목의 컨텐츠는 동적으로 바뀔 수 있습니다.
+                또한 각 구성 요소에 "키"를 제공해야합니다 (나중에 설명 됨).
+            -->
+            <todo-item
+                v-for="item in groceryList"
+                v-bind:todo="item"
+                v-bind:key="item.id"
+            ></todo-item>
+        </ol>
+        <p class="textColor"> > component 를 사용한 작성방법 </p>
     </div>
 
 
@@ -71,8 +117,29 @@
             },
             methods: {
                 reverseMessage: function () {
-                this.message = this.message.split('').reverse().join('')
+                    this.message = this.message.split('').reverse().join('')
                 }
+            }
+        })
+        var app6 = new Vue({
+            el: '#app-6',
+            data: {
+                message: '안녕하세요 Vue!'
+            }
+        })
+        Vue.component('todo-item', {
+            props: ['todo'],
+            template: '<li>{{ todo.text }}</li>'
+        })
+
+        var app7 = new Vue({
+            el: '#app-7',
+            data: {
+                groceryList: [
+                    { id: 0, text: 'Vegetables' },
+                    { id: 1, text: 'Cheese' },
+                    { id: 2, text: 'Whatever else humans are supposed to eat' }
+                ]
             }
         })
     </script>
