@@ -9,6 +9,7 @@ var usersRouter = require('./routes/users');
 var sequelize = require('./models').sequelize; // ./models/index.js 이다 폴더 내의 index.js 은 require 시 생략 가능
 
 var app = express();
+// 서버 실행 시 알아서 연동됨
 sequelize.sync();
 
 // view engine setup
