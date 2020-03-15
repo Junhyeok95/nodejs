@@ -84,4 +84,16 @@ module.exports = db;
 //     // 페이지를 조절할 경우 limits 를 정해두고 offset 을 n, (n + limit), (n + limit + limit) 등으로 설정
 // });
 
+// SELECT nodejs.users SET comment = '바꿀 내용' WHERE id = 2;
+// User.update({
+//     comment: '바꿀 내용',
+// }, {
+//     where: { id: 2 },
+// });
+
+// DELETE FROM nodejs.users WHERE id = 2;
+// User.destroy({
+//     where: { id: 2},
+// });
+
 // 쿼리 소개
