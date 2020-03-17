@@ -5,14 +5,20 @@ const path = require('path');
 const session = require('express-session');
 const flash = require('connect-flash');
 
+const passport = require('passport');
+const authRouter = require('./routes/auth');
+
 // Tip -> JSON 은 process.env 사용할 수 없음
 require('dotenv').config();
 
 const pageRouter = require('./routes/page');
 const { sequelize } = require('./models');
 
+const passportConfig = require('./passport');
+
 const app = express();
 sequelize.sync();
+passportConfig(passport);
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -33,8 +39,12 @@ app.use(session({
   },
 }));
 app.use(flash());
+app.use(passport.initialize()); // 객체에 passport 설정을 심고
+// req.session 은 express-session에서 생성하는 것이므로 뒤에 연결 !!
+app.use(passport.session()); // req.session 객체에 passport 정보를 저장함
 
 app.use('/', pageRouter);
+app.use('/auth', authRouter);
 
 app.use((req, res, next) => {
   const err = new Error('Not Found');

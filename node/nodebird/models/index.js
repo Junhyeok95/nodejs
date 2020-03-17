@@ -1,6 +1,5 @@
 'use strict'; // 엄격 모드(Strict Mode)
 
-
 const Sequelize = require('sequelize');
 const env = process.env.NODE_ENV || 'development';
 const config = require('../config/config')[env];
