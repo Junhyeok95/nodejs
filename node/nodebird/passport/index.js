@@ -8,7 +8,18 @@ module.exports = (passport) => {
 
     // passport.session() 미들웨어가 이 메서드를 호출
     passport.deserializeUser((id, done) => { // 매 요청 시 실행됨
-        User.findOne({ where: { id } }) // 데이터 베이스를 조회
+        User.findOne({
+            where: { id },
+            include: [{
+                model: User,
+                attributes: ['id', 'nick'],
+                as: 'Followers',
+            }, {
+                model: User,
+                attributes: ['id', 'nick'],
+                as: 'Followings',
+            }],
+        }) // 데이터 베이스를 조회
         .then(user => done(null, user))
         .catch(err => done(err));
     });
