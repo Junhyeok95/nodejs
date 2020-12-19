@@ -1,3 +1,5 @@
+## 01
+
 ```
 package-lock -> npm6 부터 추가된 것으로, 설치된 패키지의 이름과 정확한 버전 정보를 기재해 둠
 
@@ -17,4 +19,14 @@ package-lock -> npm6 부터 추가된 것으로, 설치된 패키지의 이름�
     "d": "1.4.x",      //  >=1.4.0  <1.5.0
     "e": "1.x",        //  >=1.0.0  <2.0.0
     "f": " "           // * 와 마찬가지로 모든 버전을 허용
+```
+
+## 02
+
+```
+mkdir -p src/js src/css dist/js dist/css
+touch src/js/app.js src/js/hello.js src/css/style.css index.html webpack.config.js
+npm i -D webpack webpack-cli
+
+npx webpack             // entry 의 위치에 bundle.js 생성 -> 최적화(uglify/minify)
 ```
