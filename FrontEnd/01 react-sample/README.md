@@ -30,3 +30,15 @@ npm i -D webpack webpack-cli
 
 npx webpack             // entry 의 위치에 bundle.js 생성 -> 최적화(uglify/minify)
 ```
+
+## 03
+
+```
+엔트리 : 모듈의 의존관계를 해석하는 시작점
+아웃풋 : 번들된 내용을 출력할 파일
+로더 : babel, style, css 등 https://webpack.js.org/concepts/
+
+npm i -D babel-core babel-loader
+npm i -D style-loader css-loader babel-preset-env babel-preset-react
+npx webpack
+```
