@@ -42,3 +42,12 @@ npm i -D babel-core babel-loader
 npm i -D style-loader css-loader babel-preset-env babel-preset-react
 npx webpack
 ```
+
+## 04 error
+
+```
+npm init -y
+npm i -S react react-dom
+npm i -D webpack webpack-cli
+npm i -D babel-loader @babel/core @babel/preset-env @babel/preset-react @babel/preset-typescript
+```
