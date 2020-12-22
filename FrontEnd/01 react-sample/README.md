@@ -51,3 +51,12 @@ npm i -S react react-dom
 npm i -D webpack webpack-cli
 npm i -D babel-loader @babel/core @babel/preset-env @babel/preset-react @babel/preset-typescript
 ```
+
+## 04 book
+
+```
+npm i -S react react-dom
+npm i -D webpack@4.4.1 webpack-cli@2.0.11
+npm i -D babel-loader@7.1.4 style-loader@0.20.3 css-loader@0.28.11 babel-core@6.26.0 babel-preset-env@1.6.1 babel-preset-react@6.24.1
+npx webpack
+```

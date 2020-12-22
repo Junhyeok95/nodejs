@@ -1,21 +1,34 @@
 const path = require("path");
 
-const webpack = require("webpack");
 module.exports = {
-  mode: "development",
-  entry: {
-    app: "./",
-  },
+  mode: "development", // 웹팩4 에서 추가
+  entry: "./src/js/app.js",
   output: {
     path: path.resolve(__dirname, "dist/js"),
     filename: "bundle.js",
-    publicPath: "",
+    // publicPath: "",
   },
-  module: {},
-  plugins: [],
-  optimization: {},
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["babel-preset-env", "react"],
+          },
+        },
+      },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
+      },
+    ],
+  },
+  // plugins: [],
+  // optimization: {},
   resolve: {
-    modules: ["node_modules"],
-    extensions: [".js", ".json", ".jsx", ".css"],
+    extensions: ["js", "json", "jsx", "css"],
   },
 };
