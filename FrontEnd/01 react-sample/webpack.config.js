@@ -1,4 +1,5 @@
 const path = require("path");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
   mode: "development", // 웹팩4 에서 추가
@@ -22,13 +23,17 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"],
+        // use: ["style-loader", "css-loader"],
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: "css-loader",
+        }),
       },
     ],
   },
-  // plugins: [],
+  plugins: [new ExtractTextPlugin("../css/style.css")],
   // optimization: {},
   resolve: {
-    extensions: ["js", "json", "jsx", "css"],
+    extensions: [".js", ".jsx", ".css", ".json"],
   },
 };
