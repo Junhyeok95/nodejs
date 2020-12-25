@@ -79,3 +79,36 @@
 ```
 참고 : https://woowabros.github.io/experience/2017/12/01/es6-experience.html
 ```
+
+## 08
+
+> ES6 (2015)
+
+```
+7. 클래스 정의
+
+  var Person = function(id, name){          class Person{
+    this.id = id;                             constructor(id, name){
+    this.name = name;                           this.id = id;
+  }                                             this.name = name;
+  Person.prototype.printName(){         =>    }
+    console.log(this.name);                   printName(){
+  }                                             console.log(this.name);
+                                              }
+                                            }
+
+  var person = new Person(1, "name");
+  preson.printName();
+
+8. 클래스 상속
+
+  class Participant extends Person{
+    constructor(id, name, channel){
+      super(id, name);
+      this.channel=channel;
+    }
+  }
+
+  9. 프라미스(Promise)
+
+```
