@@ -109,6 +109,43 @@
     }
   }
 
-  9. 프라미스(Promise)
+9. 프라미스(Promise) : 비동기 처리를 간결하고 일관적으로 다룰 수 있게 해주는 객체
+
+  // old
+  function lazy_execute(callback, delay){
+    setTimeout(() => callback(), delay);
+  }
+
+  // Hell
+  lazy_execute(() => {
+    console.log("call 1");
+    lazy_execute(() => {
+      console.log("call 2");
+      lazy_execute(() => {
+        console.log("call 3 ...");
+      }, 1000);
+    }, 1000);
+  }, 1000);
+
+  // Promise then
+  lazy_execute(() => console.log("call 1"), 1000)
+    .then(() => lazy_execute(() => console.log("call 2"), 1000))
+    .then(() => lazy_execute(() => console.log("call 3"), 1000));
+
+  // new
+  function lazy_exceute(callback, delay){
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        callback();
+        resolve();
+      }, delay);
+    });
+  };
+
+  >>> 실행 대기 중 : dending,
+      처리 성공 : fulfilled,
+      처리 실패 : rejected
+  >>> resolve() 호출 : fulfilled 상태 됨
+  >>> reject() 호출 : rejected 상태 됨
 
 ```
