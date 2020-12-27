@@ -148,4 +148,30 @@
   >>> resolve() 호출 : fulfilled 상태 됨
   >>> reject() 호출 : rejected 상태 됨
 
+  * then() 메서드는 2개의 인자를 받음 // 다른 방법으로는 1개 + catch 활용
+  ex_func(value)
+    .then(
+      (value) => console.log("fulfilled", value),
+      (value) => console.log("rejected", value),
+    )
+
+  // 예시
+  function my_func(message, delay){
+    const length_max = 10;
+
+    return new Promise((resoleve, reject) => {
+      setTimeout(() => {
+        if(message.length > length_max){
+          reject("메시지가 길다");
+        }
+        console.log("message");
+        resolve("완료");
+      }, delay);
+    });
+  };
+
+  my_func("11글자를 넘으면 실패", 1000)
+    .then((value) => console.log("fulfilled", value))
+    .catch((value) => console.log("rejected", value));
+
 ```
