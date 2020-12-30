@@ -81,4 +81,21 @@ tsc -t ES5 src/hello.ts // 트랜스파일(transpile)
     return `안녕하세요, ${name}님`; // 타입추론이 가능
   }
   const greeting_message = greet('성함'); // string
+
+필수가 아닌 인자도 ? 를 붙이면 가능하다
+
+  function greet(name?: string) {
+    return `안녕하세요, ${name || "익명"}님`;
+  }
+
+// 인자를 생략하고 호풀하면 name값이 없으므로 익명이 반환됨
+const greeting_message = greet();
+
+
+```
+
+## 13
+
+```
+
 ```
