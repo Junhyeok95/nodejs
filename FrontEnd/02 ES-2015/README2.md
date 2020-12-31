@@ -91,6 +91,25 @@ tsc -t ES5 src/hello.ts // 트랜스파일(transpile)
 // 인자를 생략하고 호풀하면 name값이 없으므로 익명이 반환됨
 const greeting_message = greet();
 
+const add = (a: number, b: number): number => {
+  return a + b;
+}
+
+function myF(){
+  retrun "함수 선언식";
+}
+let myF2() = function () {
+  return "함수 표현식";
+}
+
+function onCall(callback){
+  let name = "콜백";
+  callback(name);
+}
+
+function onSuccess(callback: (value: string) => void) {
+  callback("성공");
+}
 
 ```
 
@@ -98,4 +117,39 @@ const greeting_message = greet();
 
 ```
 
+```
+
+## 14
+
+```
+> 인터페이스 // 객체의 타입을 정의하기 위한 방법
+
+  function printName(person: {name: string}){
+    console.log(pserson.name);
+  }
+
+  let person = {id: 1, name: "이름"};
+  printName(person);
+
+  interface PersonInterface {
+    name: string;
+  }
+
+  function printName(person: PersonInterface) {
+    console.log(person.name);
+  }
+  let person = {id: 1, name: "성함"};
+  printName(person);
+
+  interface PersonInterface {
+    name: string;
+    description?: string;
+  }
+
+  function introductionPerson(person: PersonInterface) {
+    console.log(`${person.anme}님: ${person.decription} || "내용이 없습니다"}`);
+  }
+
+  let person = {id: 1, name: "이름"};
+  introductionPerson(person);
 ```
