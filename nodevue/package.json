@@ -31,7 +31,7 @@
     "mysql": "^2.18.1",
     "nodemon": "^2.0.2",
     "open-graph-scraper": "^3.6.2",
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.5.0"
   },
   "devDependencies": {
     "webpack-node-externals": "^1.7.2"
